@@ -12,6 +12,9 @@ APP_NAME = "Anonymity"
 def create_app():
     app = Flask(APP_NAME)
 
+    from . import config
+    app.config.from_object(config)
+
     from . import views
     for view in views.__all__:
         app.register_blueprint(getattr(views, view).__getattribute__("bp"))
