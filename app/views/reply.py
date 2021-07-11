@@ -30,8 +30,13 @@ def add():
 
     reply = Reply()
     reply.board_idx = board_idx
-    reply.content = request.form.get("content")
+    reply.content = request.form.get("content").strip()
     reply.good, reply.bad = 0, 0
+
+    if len(reply.content) == 0:
+        return jsonify({
+            "result": "failed"
+        })
 
     db.session.add(reply)
     db.session.commit()
@@ -43,7 +48,7 @@ def add():
 
 @bp.route("/<int:idx>")
 def get(idx: int):
-    reply_list = Reply.search.filter_by(
+    reply_list = Reply.query.filter_by(
         board_idx=idx
     ).order_by(Reply.idx.desc()).paginate(page=request.args.get("page", 1, type=int))
 

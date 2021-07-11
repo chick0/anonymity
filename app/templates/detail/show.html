@@ -1,7 +1,78 @@
-<h1>{{ board.title }}</h1>
+{% extends 'layout.html' %}←
+{% block content %}
+    <div class="container">
+        <div class="py-3">
+            <a href="{{ url_for('board.show_all') }}">← back to list</a>
+            <h1>{{ board.title }}</h1>
+            <div>
+                <button class="btn btn-success">Good</button>
+                <button class="btn btn-danger">Bad</button>
+            </div>
+        </div>
 
-<div>
-{% for line in board.content.split('\n') %}
-    <p>{{ line }}</p>
-{% endfor %}
-</div>
+        <div class="py-4">
+        {% for line in board.content.split('\n') %}
+            <p>{{ line }}</p>
+        {% endfor %}
+        </div>
+
+        <div class="py-5 mb-5">
+            <div class="input-group mb-3">
+                <input class="form-control" type="text" id="newReply" placeholder="reply">
+                <button class="btn btn-primary" id="submitReply">submit</button>
+            </div>
+            <div class="row">
+                <ul style="border-radius:.25rem" id="replyDisplay"></ul>
+                <div id="replyDisplayBottom"></div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+{% block script %}
+    <script>
+        let page = 1;
+        let total_page = 1;
+
+        document.getElementById("submitReply").addEventListener('click',function(){
+            let form = new FormData();
+            form.append("content", document.getElementById("newReply").value)
+
+            axios({
+                method: "POST",
+                url: "{{ url_for('reply.add', board_idx=board.idx) }}",
+                data: form
+            }).then(function(resp){
+                if(resp.data.result == "ok"){
+                    document.getElementById("newReply").value="";
+                    document.getElementById("newReply").blur(); fetch();
+                } else {
+                    alert('fail to submit reply')
+                }
+            }).catch(function(err){
+                alert('fail to submit reply');
+            });
+        });
+
+        function fetch(){
+            function add_reply(message){
+                var reply = document.createElement("li");
+                reply.setAttribute("class", "list-group-item");
+                reply.appendChild(document.createTextNode(message));
+                document.getElementById("replyDisplay").appendChild(reply);
+            }
+            axios({
+                method: "GET",
+                url: "{{ url_for('reply.get', idx=board.idx) }}"
+            }).then(function(resp){
+                page = resp.data.head.page;
+                total_page = resp.data.head.total_page;
+                document.getElementById("replyDisplay").innerHTML="";
+                resp.data.body.forEach(function(rep){
+                    add_reply(rep.content)
+                });
+            }).catch(function(err){
+                alert('fail to get reply');
+            });
+        } document.onload = fetch();
+    </script>
+{% endblock %}
