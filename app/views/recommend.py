@@ -3,6 +3,9 @@ from flask import Blueprint
 from flask import request
 from flask import jsonify
 
+from app import db
+from app.models import Board
+from app.models import Recommend
 from app.ip import get_ip_hash
 
 bp = Blueprint(
@@ -12,17 +15,37 @@ bp = Blueprint(
 )
 
 
-@bp.route("/detail", methods=['GET', 'POST'])
+@bp.route("/ip")
+def ip():
+    return get_ip_hash()
+
+
+@bp.route("/board", methods=['GET', 'POST'])
 def board():
+    idx = request.args.get("idx", default=-1, type=int)
+
     if request.method == "GET":
+        board_ = Board.query.filter_by(
+            idx=idx
+        ).first()
         return jsonify({
-            "idx": "int",
-            "good": "int",
-            "bad": "int",
+            "idx": idx,
+            "good": board_.good,
+            "bad": board_.bad,
         })
     elif request.method == "POST":
-        # To-Do
-        # 1) get ip hash
-        # 2) append to database
+        vote = Recommend()
+        vote.target_idx = idx
+        vote.is_board = True
+        vote.vote = True if request.form.get("vote", type=str) == 'good' else False
+        vote.used = False
+        vote.ip = get_ip_hash()
 
-        ip = get_ip_hash()
+        db.session.add(vote)
+        db.session.commit()
+        return jsonify({
+            "idx": idx,
+            "vote": vote.vote,
+            "result": "ok",
+            "date": vote.date.__str__()
+        })
