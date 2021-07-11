@@ -12,7 +12,7 @@ bp = Blueprint(
 )
 
 
-@bp.route("/t/<str:query>")
+@bp.route("/t/<string:query>")
 def title(query: str):
     board = Board.query.filter_by(
         title=Board.title.ilike(query)
@@ -24,7 +24,7 @@ def title(query: str):
     )
 
 
-@bp.route("/c/<str:query>")
+@bp.route("/c/<string:query>")
 def content(query: str):
     board = Board.query.filter_by(
         content=Board.title.ilike(query)
