@@ -25,5 +25,6 @@ def show(idx: int):
 
     return render_template(
         "detail/show.html",
-        board=board
+        board=board,
+        need_axios=True
     )

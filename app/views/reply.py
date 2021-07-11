@@ -16,7 +16,7 @@ bp = Blueprint(
 )
 
 
-@bp.get("/")
+@bp.route("/", methods=['POST'])
 def add():
     board_idx = request.args.get("board_idx", -1, type=int)
     board = Board.query.filter_by(
