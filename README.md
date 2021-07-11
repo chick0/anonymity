@@ -4,7 +4,7 @@
 ## How to run?
 1. Install requirements
    ```
-   pip intall -r requirements.txt
+   $ pip intall -r requirements.txt
    ```
 2. Set Database connection URL
    ```
@@ -13,7 +13,7 @@
     - add to your 'Environment' key is 'anonymity_sql'
 3. do database migration
    ```
-   flask db upgrade
+   $ flask db upgrade
    ```
 4. Set Redis connection URL
    ```
@@ -22,5 +22,5 @@
     - add to your 'Environment' key is 'anonymity_redis'
 4. Launch Server
    ```
-   launch.py --port <port default:8082>
+   $ python launch.py --port <port default:8082>
    ```
