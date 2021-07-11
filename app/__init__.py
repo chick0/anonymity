@@ -10,7 +10,7 @@ APP_NAME = "Anonymity"
 
 
 def create_app():
-    app = Flask(APP_NAME)
+    app = Flask(__name__)
 
     from . import config
     app.config.from_object(config)
