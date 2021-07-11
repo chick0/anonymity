@@ -1,0 +1,7 @@
+<h1>{{ board.title }}</h1>
+
+<div>
+{% for line in board.content.split('\n') %}
+    <p>{{ line }}</p>
+{% endfor %}
+</div>
