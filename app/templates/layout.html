@@ -8,5 +8,12 @@
     </head>
     <body>
         {% block content %}{% endblock %}
+
+        <!-- Script! -->
+        <script src="{{ url_for('static', filename='bootstrap.min.js') }}"></script>
+    {% if need_axios is true %}
+        <script src="{{ url_for('static', filename='axios.min.js') }}"></script>
+    {% endif %}
+        {% block script %}{% endblock %}
     </body>
 </html>
