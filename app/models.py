@@ -8,13 +8,16 @@
 #   title string 32
 #   content text maybe 65535
 #   date datetime
-#
+#   good int
+#   bad int
 
 # reply
 #   idx int
 #   board_idx int
 #   content string 500
 #   date datetime
+#   good int
+#   bad int
 
 # recommend
 #   idx int
@@ -22,6 +25,8 @@
 #   is_board tinyint [T: board, F: reply]
 #   vote tinyint [T: Good, F: Bad]
 #   date datetime
+#   used tinyint [T: used, F: not used]
+#   ip string 96
 
 
 from . import db
@@ -73,6 +78,13 @@ class Board(db.Model):
         default=func.now()
     )
 
+    good = db.Column(
+        db.Integer
+    )
+    bad = db.Column(
+        db.Integer
+    )
+
 
 class Reply(db.Model):
     idx = db.Column(
@@ -96,6 +108,13 @@ class Reply(db.Model):
         db.DateTime,
         nullable=False,
         default=func.now()
+    )
+
+    good = db.Column(
+        db.Integer
+    )
+    bad = db.Column(
+        db.Integer
     )
 
 
@@ -127,4 +146,14 @@ class Recommend(db.Model):
         db.DateTime,
         nullable=False,
         default=func.now()
+    )
+
+    used = db.Column(
+        db.Boolean,
+        nullable=False,
+        default=False
+    )
+
+    ip = db.Column(
+        db.String(96)
     )
