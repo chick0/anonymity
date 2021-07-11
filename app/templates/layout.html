@@ -7,6 +7,28 @@
         <link rel="stylesheet" href="{{ url_for('static', filename='bootstrap.min.css') }}">
     </head>
     <body>
+        <nav class="navbar fixed-bottom navbar-expand-lg navbar-dark bg-dark">
+            <div class="container">
+                <a class="navbar-brand" href="#">Anonymity</a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbar">
+                    <ul class="navbar-nav mr-auto">
+                        <li class="nav-item">
+                            <a class="nav-link" href="{{ url_for('board.show_all') }}">Show All</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="{{ url_for('write.write') }}">Write</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#">Search</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+
         {% block content %}{% endblock %}
 
         <!-- Script! -->
