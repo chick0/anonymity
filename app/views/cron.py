@@ -6,7 +6,6 @@ from flask import Blueprint
 from app import db
 from app.models import Salt
 from app.models import Board
-from app.models import Reply
 from app.models import Recommend
 from app.ip import gen_salt
 
@@ -18,7 +17,7 @@ bp = Blueprint(
 )
 
 
-@bp.route("/")
+@bp.route("")
 def run():
     # 1) check the ip salt
     salt = Salt.query.first()
@@ -26,6 +25,8 @@ def run():
         gen_salt()
     else:
         if salt.created > datetime.now() + timedelta(days=1):
+            db.session.delete(salt)
+            db.session.commit()
             gen_salt()
 
     # 2) Collect Voting Results
@@ -38,12 +39,16 @@ def run():
         board = Board.query.filter_by(
             idx=vote.target_idx
         ).first()
-        if vote.vote is True:
-            board.good += 1
-        else:
-            board.bad += 1
+        if board is not None:
+            if vote.vote is True:
+                board.good += 1
+            else:
+                board.bad += 1
 
-        db.session.delete(vote)
+            vote.used = True
+        else:
+            db.session.delete(vote)
+
         db.session.commit()
 
-    return "END"
+    return "OK"
