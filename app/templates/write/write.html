@@ -15,14 +15,12 @@
                 </div>
             </div>
             <div class="mb-3 row">
-                <label for="captcha" class="col-sm-2 col-form-label">captcha</label>
-                <div class="col-sm-10">
-                    <input class="form-control" type="text" id="captcha" name="captcha" required="required">
+                <div class="input-group col-sm-10 mb-3">
+                    <img class="input-group-text" src="{{ url_for('captcha.generate', uuid=uuid) }}">
+                    <input class="form-control" type="text" name="captcha" required="required" placeholder="captcha code">
                 </div>
+                <input type="text" name="uuid" value="{{ uuid }}" hidden="hidden" readonly="readonly">
             </div>
-            <img src="{{ url_for('captcha.generate', uuid=uuid) }}">
-            <input type="text" name="uuid" value="{{ uuid }}" hidden="hidden" readonly="readonly">
-
             <button class="btn btn-danger" type="submit">Write</button>
         </form>
     </div>
