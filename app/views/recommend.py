@@ -34,15 +34,28 @@ def board():
             "bad": board_.bad,
         })
     elif request.method == "POST":
-        vote = Recommend()
-        vote.target_idx = idx
-        vote.is_board = True
-        vote.vote = True if request.form.get("vote", type=str) == 'good' else False
-        vote.used = False
-        vote.ip = get_ip_hash()
+        vote = Recommend.query.filter_by(
+            target_idx=idx,
+            is_board=True,
+            ip=get_ip_hash()
+        ).first()
 
-        db.session.add(vote)
-        db.session.commit()
+        if vote is None:
+            vote = Recommend()
+            vote.target_idx = idx
+            vote.is_board = True
+            vote.vote = True if request.form.get("vote", type=str) == 'good' else False
+            vote.used = False
+            vote.ip = get_ip_hash()
+
+            db.session.add(vote)
+            db.session.commit()
+        else:
+            return jsonify({
+                "result": "canceled",
+                "message": "already voted"
+            }), 400
+
         return jsonify({
             "idx": idx,
             "vote": vote.vote,

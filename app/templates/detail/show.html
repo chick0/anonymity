@@ -5,8 +5,8 @@
             <a href="{{ url_for('board.show_all') }}">← back to list</a>
             <h1>{{ board.title }}</h1>
             <div>
-                <button class="btn btn-success">Good:{{ board.good }}</button>
-                <button class="btn btn-danger">Bad:{{ board.bad }}</button>
+                <button class="btn btn-success" id="boardGood">Good:{{ board.good }}</button>
+                <button class="btn btn-danger" id="boardBad">Bad:{{ board.bad }}</button>
             </div>
         </div>
 
@@ -50,6 +50,20 @@
     <script>
         let page = 1;
         let total_page = 1;
+
+        function doVote(vote){
+            let form = new FormData();
+            form.append("vote", vote);
+            axios({
+                method: "POST",
+                url: "{{ url_for('recommend.board', idx=board.idx) }}",
+                data: form
+            }).then(function(){alert('voted!')}).catch(function(err){
+                alert(err.response.data.message);
+            });
+        }
+        document.getElementById("boardGood").addEventListener('click', function(){doVote('good')});
+        document.getElementById("boardBad").addEventListener('click', function(){doVote('bad')});
 
         document.getElementById("submitReply").addEventListener('click',function(){
             let form = new FormData();
