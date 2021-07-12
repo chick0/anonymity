@@ -13,7 +13,6 @@ APP_NAME = "Anonymity"
 
 def create_app():
     app = Flask(__name__)
-    app.config['REDIS_URL'] = "redis://:@192.168.219.100:6379/0"
 
     from . import config
     app.config.from_object(config)
