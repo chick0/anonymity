@@ -1,4 +1,5 @@
 from io import BytesIO
+from random import choice
 from secrets import token_hex
 
 from flask import Blueprint
@@ -18,7 +19,8 @@ bp = Blueprint(
 @bp.route("/<string:uuid>")
 def generate(uuid: str):
     image = ImageCaptcha()
-    token = token_hex(2)
+    token = token_hex(3)
+    token = token[:choice([4, 4, 4, 4, 5, 5, 5])]
 
     stream = BytesIO()
     image.generate_image(token).save(stream, format="JPEG")
