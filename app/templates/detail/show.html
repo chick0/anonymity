@@ -5,8 +5,8 @@
             <a href="{{ url_for('board.show_all') }}">← back to list</a>
             <h1>{{ board.title }}</h1>
             <div>
-                <button class="btn btn-success">Good</button>
-                <button class="btn btn-danger">Bad</button>
+                <button class="btn btn-success">Good:{{ board.good }}</button>
+                <button class="btn btn-danger">Bad:{{ board.bad }}</button>
             </div>
         </div>
 
@@ -24,6 +24,24 @@
             <div class="row">
                 <ul style="border-radius:.25rem" id="replyDisplay"></ul>
                 <div id="replyDisplayBottom"></div>
+            </div>
+        </div>
+
+        <!-- Modal -->
+        <div class="modal" id="showCaptcha" tabindex="-1" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title">Captcha</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                        <button type="button" class="btn btn-primary" id="captchaSubmit">Submit</button>
+                    </div>
+                </div>
             </div>
         </div>
     </div>

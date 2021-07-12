@@ -41,6 +41,8 @@ def write():
             if len(board.content) == 0:
                 return redirect(url_for(".write"))
 
+            board.good, board.bad = 0, 0
+
             db.session.add(board)
             db.session.commit()
 
