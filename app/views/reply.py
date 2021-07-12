@@ -2,6 +2,9 @@
 from flask import Blueprint
 from flask import request
 from flask import jsonify
+from flask import render_template
+from flask import redirect
+from flask import url_for
 
 
 from app import db
@@ -69,6 +72,15 @@ def get(idx: int):
     })
 
 
-# To-Do
-# 1) get reply from database
-# 2) show reply with template
+@bp.route("/show/<int:idx>")
+def show(idx: int):
+    reply = Reply.query.filter_by(
+        idx=idx
+    ).first()
+    if reply is None:
+        return redirect(url_for("board.show_all"))
+
+    return render_template(
+        "reply/show.html",
+        reply=reply
+    )

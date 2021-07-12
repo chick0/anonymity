@@ -1,0 +1,10 @@
+{% extends 'layout.html' %}←
+{% block content %}
+    <div class="container">
+        <div class="py-3">
+            <a href="{{ url_for('detail.show', idx=reply.board_idx) }}">← back to board</a>
+
+            <p>{{ reply.content }}</p>
+        </div>
+    </div>
+{% endblock %}
