@@ -31,7 +31,6 @@ def add():
     reply = Reply()
     reply.board_idx = board_idx
     reply.content = request.form.get("content").strip()
-    reply.good, reply.bad = 0, 0
 
     if len(reply.content) == 0:
         return jsonify({
@@ -57,9 +56,7 @@ def get(idx: int):
         result.append({
             "idx": reply.idx,
             "content": reply.content,
-            "date": reply.date,
-            "good": reply.good,
-            "bad": reply.bad
+            "date": reply.date
         })
 
     return jsonify({
