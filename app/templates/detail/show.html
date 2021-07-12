@@ -54,11 +54,13 @@
         });
 
         function fetch(){
-            function add_reply(message){
-                var reply = document.createElement("li");
-                reply.setAttribute("class", "list-group-item");
-                reply.appendChild(document.createTextNode(message));
-                document.getElementById("replyDisplay").appendChild(reply);
+            function add_reply(idx, message){
+                var li = document.createElement("li");
+                li.setAttribute("class", "list-group-item");
+                li.setAttribute("data-idx", idx);
+                var b = document.createElement("b"); b.innerText=idx; li.appendChild(b);
+                li.appendChild(document.createTextNode(": "+message));
+                document.getElementById("replyDisplay").appendChild(li);
             }
             axios({
                 method: "GET",
@@ -68,7 +70,7 @@
                 total_page = resp.data.head.total_page;
                 document.getElementById("replyDisplay").innerHTML="";
                 resp.data.body.forEach(function(rep){
-                    add_reply(rep.content)
+                    add_reply(rep.idx, rep.content);
                 });
             }).catch(function(err){
                 alert('fail to get reply');
