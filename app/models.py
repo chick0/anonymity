@@ -16,8 +16,6 @@
 #   board_idx int
 #   content string 500
 #   date datetime
-#   good int
-#   bad int
 
 # recommend
 #   idx int
@@ -108,13 +106,6 @@ class Reply(db.Model):
         db.DateTime,
         nullable=False,
         default=func.now()
-    )
-
-    good = db.Column(
-        db.Integer
-    )
-    bad = db.Column(
-        db.Integer
     )
 
 

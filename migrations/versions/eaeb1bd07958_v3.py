@@ -1,8 +1,8 @@
-"""v1
+"""v3
 
-Revision ID: 6abc60dba3e2
+Revision ID: eaeb1bd07958
 Revises: 
-Create Date: 2021-07-11 02:52:52.491661
+Create Date: 2021-07-12 10:56:37.832875
 
 """
 from alembic import op
@@ -10,7 +10,7 @@ import sqlalchemy as sa
 
 
 # revision identifiers, used by Alembic.
-revision = '6abc60dba3e2'
+revision = 'eaeb1bd07958'
 down_revision = None
 branch_labels = None
 depends_on = None
@@ -23,6 +23,8 @@ def upgrade():
     sa.Column('title', sa.String(length=32), nullable=False),
     sa.Column('content', sa.Text(), nullable=False),
     sa.Column('date', sa.DateTime(), nullable=False),
+    sa.Column('good', sa.Integer(), nullable=True),
+    sa.Column('bad', sa.Integer(), nullable=True),
     sa.PrimaryKeyConstraint('idx'),
     sa.UniqueConstraint('idx')
     )
@@ -32,6 +34,8 @@ def upgrade():
     sa.Column('is_board', sa.Boolean(), nullable=False),
     sa.Column('vote', sa.Boolean(), nullable=False),
     sa.Column('date', sa.DateTime(), nullable=False),
+    sa.Column('used', sa.Boolean(), nullable=False),
+    sa.Column('ip', sa.String(length=96), nullable=True),
     sa.PrimaryKeyConstraint('idx'),
     sa.UniqueConstraint('idx')
     )
