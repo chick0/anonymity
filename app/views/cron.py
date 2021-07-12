@@ -46,6 +46,4 @@ def run():
         db.session.delete(vote)
         db.session.commit()
 
-    # 2-2) Reply
-
-    return ""
+    return "END"
