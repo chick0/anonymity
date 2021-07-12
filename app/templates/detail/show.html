@@ -10,7 +10,7 @@
             </div>
         </div>
 
-        <div class="py-4">
+        <div class="py-4" id="content">
         {% for line in board.content.split('\n') %}
             <p>{{ line }}</p>
         {% endfor %}
@@ -33,7 +33,9 @@
     </div>
 {% endblock %}
 {% block script %}
+    <script src="{{ url_for('static', filename='marked.min.js') }}"></script>
     <script>
+        document.getElementById("content").innerHTML = marked(document.getElementById("content").innerText);
         let uuid = "{{ uuid }}";
         let page = 1;
         let total_page = 1;
