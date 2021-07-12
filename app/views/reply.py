@@ -6,8 +6,9 @@ from flask import render_template
 from flask import redirect
 from flask import url_for
 
-
 from app import db
+from app import redis
+from app.ip import get_ip_hash
 from app.models import Board
 from app.models import Reply
 
@@ -30,6 +31,22 @@ def add():
             "message": "board not found",
             "result": "failed"
         }), 404
+
+    uuid = request.form.get("uuid", "", type=str)
+    if len(uuid) == 0:
+        return jsonify({
+            "message": "captcha uuid is missing",
+            "result": "failed"
+        }), 400
+
+    captcha = request.form.get("captcha", None)
+    captcha_from_redis = redis.get(f"{get_ip_hash()}:{uuid}").decode()
+    redis.delete(f"{get_ip_hash()}:{uuid}")
+    if captcha != captcha_from_redis:
+        return jsonify({
+            "message": "captcha code is incorrect",
+            "result": "failed"
+        }), 400
 
     reply = Reply()
     reply.board_idx = board_idx

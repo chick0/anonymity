@@ -1,3 +1,4 @@
+from uuid import uuid4
 
 from flask import Blueprint
 from flask import render_template
@@ -26,5 +27,6 @@ def show(idx: int):
     return render_template(
         "detail/show.html",
         board=board,
-        need_axios=True
+        need_axios=True,
+        uuid=uuid4().__str__()
     )

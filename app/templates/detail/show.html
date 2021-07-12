@@ -18,6 +18,10 @@
 
         <div class="py-5 mb-5">
             <div class="input-group mb-3">
+                <img class="input-group-text" id="captchaImage" src="{{ url_for('captcha.generate', uuid=uuid) }}">
+                <input class="form-control" type="text" id="captchaCode" placeholder="captcha code">
+            </div>
+            <div class="input-group mb-3">
                 <input class="form-control" type="text" id="newReply" placeholder="reply">
                 <button class="btn btn-primary" id="submitReply">submit</button>
             </div>
@@ -26,30 +30,20 @@
                 <div id="replyDisplayBottom"></div>
             </div>
         </div>
-
-        <!-- Modal -->
-        <div class="modal" id="showCaptcha" tabindex="-1" aria-hidden="true">
-            <div class="modal-dialog">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h5 class="modal-title">Captcha</h5>
-                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                    </div>
-                    <div class="modal-body">
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                        <button type="button" class="btn btn-primary" id="captchaSubmit">Submit</button>
-                    </div>
-                </div>
-            </div>
-        </div>
     </div>
 {% endblock %}
 {% block script %}
     <script>
+        let uuid = "{{ uuid }}";
         let page = 1;
         let total_page = 1;
+
+        function UUIDv4(){
+            uuid = 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function(c) {
+                var r = Math.random() * 16 | 0, v = c == 'x' ? r : (r & 3 | 8);
+                return v.toString(16);
+            }); document.getElementById("captchaImage").src = "/captcha/" + uuid;
+        }
 
         function doVote(vote){
             let form = new FormData();
@@ -68,6 +62,8 @@
         document.getElementById("submitReply").addEventListener('click',function(){
             let form = new FormData();
             form.append("content", document.getElementById("newReply").value)
+            form.append("uuid", uuid)
+            form.append("captcha", document.getElementById("captchaCode").value)
 
             axios({
                 method: "POST",
@@ -76,13 +72,14 @@
             }).then(function(resp){
                 if(resp.data.result == "ok"){
                     document.getElementById("newReply").value="";
+                    document.getElementById("captchaCode").value="";
                     document.getElementById("newReply").blur(); fetch();
                 } else {
                     alert('fail to submit reply')
                 }
             }).catch(function(err){
                 alert('fail to submit reply');
-            });
+            }); UUIDv4();
         });
 
         function fetch(){
