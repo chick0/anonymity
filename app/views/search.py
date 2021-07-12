@@ -1,15 +1,16 @@
-
 from flask import Blueprint
 from flask import render_template
 
 from app.models import Board
-
 
 bp = Blueprint(
     name="search",
     import_name="search",
     url_prefix="/search"
 )
+
+
+# TODO: create template
 
 
 @bp.route("/t/<string:query>")
