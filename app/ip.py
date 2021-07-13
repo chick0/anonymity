@@ -11,7 +11,7 @@ from app.models import Salt
 
 def gen_salt() -> Salt:
     salt = Salt()
-    salt.string = token_bytes(20).hex()
+    salt.string = token_bytes(10).hex()
 
     db.session.add(salt)
     db.session.commit()
