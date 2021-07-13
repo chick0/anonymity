@@ -23,7 +23,7 @@ def get_salt() -> str:
     if salt is None:
         salt = gen_salt()
 
-    if salt.created > datetime.now() + timedelta(days=1):
+    if datetime.now() >= salt.created + timedelta(days=1):
         salt = gen_salt()
 
     return salt.string

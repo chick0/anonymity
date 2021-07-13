@@ -24,7 +24,7 @@ def run():
     if salt is None:
         gen_salt()
     else:
-        if salt.created > datetime.now() + timedelta(days=1):
+        if datetime.now() >= salt.created + timedelta(days=1):
             db.session.delete(salt)
             db.session.commit()
             gen_salt()
