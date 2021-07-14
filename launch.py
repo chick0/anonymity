@@ -36,12 +36,12 @@ if __name__ == "__main__":
 
     args = parser.parse_args()
 
-    print(f"Starting 'Anonymity' with port number {args.port}")
+    print(f"Starting 'Anonymity' with port number {args.set_port}")
     if args.no_cron_job is True:
         print("- cron job is disabled!")
         print("- You must register a curl command for the cron path with crontab.")
     else:
-        p = Process(target=task, args=(args.port,))
+        p = Process(target=task, args=(args.set_port,))
         p.start()
 
-    serve(app=create_app(), port=args.port)
+    serve(app=create_app(), port=args.set_port)
