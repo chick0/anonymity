@@ -27,16 +27,21 @@ def task(port: int):
 
 if __name__ == "__main__":
     parser = ArgumentParser(description="Anonymity Launcher")
-    parser.add_argument("-p", "--port",
-                        help="set port number (default:8082)",
+    parser.add_argument("--set-port", metavar="PORT",
+                        help="set the port number to run the waitress server",
                         action="store", type=int, default=8082)
+    parser.add_argument("--no-cron-job",
+                        help="disable cron job working with multiprocessing",
+                        action="store_const", const=True)
 
     args = parser.parse_args()
 
-    # TODO: add option no-cron
-    #   and add to README.md
-    p = Process(target=task, args=(args.port,))
-    p.start()
-
     print(f"Starting 'Anonymity' with port number {args.port}")
+    if args.no_cron_job is True:
+        print("- cron job is disabled!")
+        print("- You must register a curl command for the cron path with crontab.")
+    else:
+        p = Process(target=task, args=(args.port,))
+        p.start()
+
     serve(app=create_app(), port=args.port)
