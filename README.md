@@ -1,5 +1,5 @@
 # Anonymity
-'Anonymity' anon board service
+'Anonymity' is an **Anonymous** board service
 
 ## How to run?
 1. Install requirements
@@ -8,7 +8,7 @@
    ```
 2. Set Database connection URL
    ```
-   export anonymity_sql='mysql://<id>:<password>@<host>:<port>/<db name>'
+   $ export anonymity_sql='mysql://<id>:<password>@<host>:<port>/<db name>'
    ```
 3. do database migration
    ```
@@ -16,7 +16,7 @@
    ```
 4. Set Redis connection URL
    ```
-   export anonymity_redis='redis://:<password>@<host>:<port>/<id>'
+   $ export anonymity_redis='redis://:<password>@<host>:<port>/<id>'
    ```
 4. Launch Server
    ```
