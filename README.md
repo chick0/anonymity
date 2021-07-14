@@ -22,3 +22,20 @@
    ```
    $ python launch.py --port <port default:8082>
    ```
+
+## CLI Tools
+### admin.py
+```
+options:
+```
+
+### board.py
+```
+options:
+```
+
+### launch.py
+```
+options:
+   -p --port : set the port number to run the waitress server 
+```

@@ -3,6 +3,23 @@
 #   salt string 20
 #   created datetime
 
+# TODO: admin
+#   idx int
+#   title string 32
+#   content text
+#   date datetime
+#   good int
+#   bad int
+
+# TODO: token
+#   idx int
+#   is_onetime tinyint [T: one-time, F: access]
+#   token text
+#   expire datetime NOT-NULL NO-DEFAULT
+
+# TODO: table
+#   name string 32
+
 # board
 #   idx int
 #   title string 32
@@ -10,6 +27,7 @@
 #   date datetime
 #   good int
 #   bad int
+#   table_name string 32 [nullable]
 
 # reply
 #   idx int

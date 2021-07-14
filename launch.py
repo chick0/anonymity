@@ -32,6 +32,9 @@ if __name__ == "__main__":
                         action="store", type=int, default=8082)
 
     args = parser.parse_args()
+
+    # TODO: add option no-cron
+    #   and add to README.md
     p = Process(target=task, args=(args.port,))
     p.start()
 
