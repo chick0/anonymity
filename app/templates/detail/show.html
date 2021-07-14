@@ -7,6 +7,9 @@
             <div>
                 <button class="btn btn-success" id="boardGood">Good:{{ board.good }}</button>
                 <button class="btn btn-danger" id="boardBad">Bad:{{ board.bad }}</button>
+            {% if board|check_table_name is true %}
+                <a class="btn btn-secondary" href="{{ url_for('table.show_table', name=board.table_name) }}">Table:{{ board.table_name }}</a>
+            {% endif %}
             </div>
         </div>
 

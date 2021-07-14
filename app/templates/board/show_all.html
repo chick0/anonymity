@@ -4,6 +4,14 @@
     {% for board in board_list.items %}
         <div class="py-5" id="{{ board.idx }}">
             <h3><a href="{{ url_for('detail.show', idx=board.idx) }}">{{ board.title }}</a></h3>
+            <div class="mb-2">
+                <b class="badge bg-success">Good:{{ board.good }}</b>
+                <b class="badge bg-danger">Bad:{{ board.bad }}</b>
+            {% if board|check_table_name is true %}
+                <b class="badge bg-secondary">Table:{{ board.table_name }}</b>
+            {% endif %}
+            </div>
+
             <div style="max-height:180px;overflow-y:scroll;">
             {% for line in board.content.split('\n') %}
                 <p>{{ line }}</p>

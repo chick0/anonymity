@@ -17,8 +17,9 @@
 #   token text
 #   expire datetime NOT-NULL NO-DEFAULT
 
-# TODO: table
-#   name string 32
+# table
+#   name string 32 [UNIQUE PRIMARY_KEY]
+#   explain text
 
 # board
 #   idx int
@@ -70,6 +71,18 @@ class Salt(db.Model):
     )
 
 
+class Table(db.Model):
+    name = db.Column(
+        db.String(32),
+        unique=True,
+        primary_key=True,
+        nullable=False
+    )
+    explain = db.Column(
+        db.Text
+    )
+
+
 class Board(db.Model):
     idx = db.Column(
         db.Integer,
@@ -99,6 +112,9 @@ class Board(db.Model):
     )
     bad = db.Column(
         db.Integer
+    )
+    table_name = db.Column(
+        db.String(32)
     )
 
 
