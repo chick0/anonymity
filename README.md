@@ -39,4 +39,8 @@ options:
 ### table.py
 ```
 options:
+   --show   : show all tables
+   --add    : add new table
+   --edit   : edit table data
+   --delete : delete table
 ```
