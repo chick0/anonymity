@@ -1,6 +1,8 @@
 from uuid import uuid4
+from urllib.parse import urlparse
 
 from flask import Blueprint
+from flask import request
 from flask import render_template
 
 from app.models import Board
@@ -24,9 +26,16 @@ def show(idx: int):
             url="/"
         ), 404
 
+    parse = urlparse(url=request.referrer)
+    if parse.path.startswith("/table"):
+        from_table = True
+    else:
+        from_table = False
+
     return render_template(
         "detail/show.html",
         board=board,
         need_axios=True,
-        uuid=uuid4().__str__()
+        uuid=uuid4().__str__(),
+        from_table=from_table
     )

@@ -1,0 +1,16 @@
+{% extends 'layout.html' %}
+{% block content %}
+    <div class="container">
+        <div class="py-3">
+            <a href="{{ url_for('board.show_all') }}">← back to list</a>
+            <h1>Tables</h1>
+        </div>
+
+    {% for table in tables %}
+        <div class="py-2" id="table__{{ table.name }}">
+            <h3><a href="{{ url_for('table.show_table', name=table.name) }}">{{ table.name }}</a></h3>
+            <p class="lead">{{ table.explain }}</p>
+        </div>
+    {% endfor %}
+    </div>
+{% endblock %}
