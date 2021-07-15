@@ -3,15 +3,7 @@
 #   salt string 20
 #   created datetime
 
-# TODO: admin
-#   idx int
-#   title string 32
-#   content text
-#   date datetime
-#   good int
-#   bad int
-
-# TODO: token
+# token
 #   idx int
 #   is_onetime tinyint [T: one-time, F: access]
 #   token text
@@ -29,6 +21,7 @@
 #   good int
 #   bad int
 #   table_name string 32 [nullable]
+#   is_notice tinyint [T: notice, F: board]
 
 # reply
 #   idx int
@@ -68,6 +61,31 @@ class Salt(db.Model):
         db.DateTime,
         nullable=False,
         default=func.now()
+    )
+
+
+class Token(db.Model):
+    idx = db.Column(
+        db.Integer,
+        unique=True,
+        primary_key=True,
+        nullable=False
+    )
+
+    is_onetime = db.Column(
+        db.Boolean,
+        nullable=False,
+        default=True
+    )
+
+    token = db.Column(
+        db.String(120),
+        nullable=False
+    )
+
+    expire = db.Column(
+        db.DateTime,
+        nullable=False
     )
 
 
@@ -115,6 +133,12 @@ class Board(db.Model):
     )
     table_name = db.Column(
         db.String(32)
+    )
+
+    is_notice = db.Column(
+        db.Boolean,
+        nullable=False,
+        default=False
     )
 
 
