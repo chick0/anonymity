@@ -64,6 +64,6 @@ def write(name: str):
         return redirect(url_for(".show_all_table"))
 
     table_key = uuid4().__str__()
-    redis.set(f"{get_ip_hash()}:{table_key}", name)
+    redis.set(f"{get_ip_hash()}:{table_key}", name, ex=3600)
 
     return redirect(url_for("write.write", table_key=table_key))

@@ -61,7 +61,7 @@ def verify():
                     token.token = token_bytes(60).hex()
                     token.expire = datetime.now() + timedelta(hours=1)
 
-                    redis.set(f"access:{token.token}", get_ip_hash(), ex=86400)
+                    redis.set(f"access:{token.token}", get_ip_hash(), ex=3660)
 
                     db.session.add(token)
                     db.session.commit()
