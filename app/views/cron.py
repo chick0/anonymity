@@ -6,6 +6,7 @@ from flask import Blueprint
 from app import db
 from app.models import Salt
 from app.models import Board
+from app.models import Token
 from app.models import Recommend
 from app.ip import gen_salt
 
@@ -49,6 +50,12 @@ def run():
         else:
             db.session.delete(vote)
 
-        db.session.commit()
+    db.session.commit()
+
+    # 3) Remove Expired Sessions
+    for token in Token.query.all():
+        if not token.expire >= datetime.now():
+            db.session.delete(token)
+    db.session.commit()
 
     return "OK"
