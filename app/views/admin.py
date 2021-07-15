@@ -1,8 +1,13 @@
+from uuid import uuid4
+from secrets import token_bytes
+from datetime import datetime
+from datetime import timedelta
 
 from flask import Blueprint
 from flask import request
-from flask import render_template
+from flask import redirect
 from flask import url_for
+from flask import render_template
 
 from app import db
 from app import redis
@@ -18,19 +23,79 @@ bp = Blueprint(
 )
 
 
-@bp.route("/verify")
+def verify_access_token(access_token: str) -> bool:
+    token = Token.query.filter_by(
+        token=access_token
+    ).first()
+    if token is not None:
+        if token.expire >= datetime.now():
+            if get_ip_hash() == redis.get(f"access:{access_token}").decode():
+                return True
+        else:
+            db.session.delete(token)
+            db.session.commit()
+
+    return False
+
+
+@bp.route("/verify", methods=['GET', 'POST'])
 def verify():
-    # TODO: verify with one-time token
-    # TODO: delete one-time token and create access token [TIME LIMIT: 30m]  (<ip>:<rand string>)
-    # TODO: create session with redis [DO NOT USE COOKIE/SESSION]
-    return "TO-DO"
+    if request.method == "POST":
+        uuid = request.form.get("uuid", None)
+        if uuid is not None:
+            captcha = request.form.get("captcha", None)
+            captcha_from_redis = redis.get(f"{get_ip_hash()}:{uuid}").decode()
+            redis.delete(f"{get_ip_hash()}:{uuid}")
+
+            if captcha == captcha_from_redis:
+                one_time_token = request.form.get("token", "")
+                token = Token.query.filter_by(
+                    token=one_time_token
+                ).first()
+                if token.expire >= datetime.now():
+                    db.session.delete(token)
+                    del token
+
+                    token = Token()
+                    token.is_onetime = False
+                    token.token = token_bytes(60).hex()
+                    token.expire = datetime.now() + timedelta(hours=1)
+
+                    redis.set(f"access:{token.token}", get_ip_hash(), ex=86400)
+
+                    db.session.add(token)
+                    db.session.commit()
+                    return redirect(url_for(".write", token=token.token))
+
+    uuid = uuid4().__str__()
+    return render_template(
+        "admin/verify.html",
+        uuid=uuid
+    )
 
 
-@bp.route("/write")
+@bp.route("/write", methods=['GET', 'POST'])
 def write():
-    # TODO: verify with access token
-    # TODO: write notice
-    return "TO-DO"
+    if not verify_access_token(request.args.get("token", "")):
+        return redirect(url_for(".verify"))
+
+    if request.method == "POST":
+        board = Board()
+        board.title = request.form.get("title", None)
+        board.content = request.form.get("content", None)
+        board.good, board.bad = 0, 0
+        board.is_notice = True
+
+        if board.title is not None and board.content is not None:
+            board.title = board.title.strip()[:32]
+            board.content = board.content.strip()[:60000]
+            db.session.add(board)
+            db.session.commit()
+
+    return render_template(
+        "write/write.html",
+        no_captcha=True
+    )
 
 
 @bp.route("")
