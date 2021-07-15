@@ -27,6 +27,9 @@
 ### admin.py
 ```
 options:
+   --show   : show all admin sessions
+   --create : create new one-time token
+   --logout : delete all login sessions
 ```
 
 ### launch.py
