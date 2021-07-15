@@ -3,10 +3,12 @@ from argparse import ArgumentParser
 from datetime import datetime
 from datetime import timedelta
 
+from redis import Redis
 from sqlalchemy.orm import sessionmaker
 from sqlalchemy import create_engine
 
 from app.config import SQLALCHEMY_DATABASE_URI
+from app.config import REDIS_URL
 from app.models import Token
 
 
@@ -42,10 +44,14 @@ def delete_all_session():
         ).delete()
 
     session.commit()
+    for key in redis.keys("access:*"):
+        redis.delete(key)
+
     show_logins()
 
 
 if __name__ == "__main__":
+    redis = Redis.from_url(REDIS_URL)
     engine = create_engine(SQLALCHEMY_DATABASE_URI)
 
     parser = ArgumentParser(description="'Anonymity' Admin token manager")
