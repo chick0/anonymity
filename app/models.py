@@ -6,7 +6,7 @@
 # token
 #   idx int
 #   is_onetime tinyint [T: one-time, F: access]
-#   token text
+#   token string 120
 #   expire datetime NOT-NULL NO-DEFAULT
 
 # table
