@@ -31,10 +31,10 @@ def show_table(name: str):
     ).paginate(page=request.args.get("page", 1, type=int),
                max_per_page=8)
 
-    prev_page = url_for("board.show_all", page=board.prev_num) \
+    prev_page = url_for(".show_all", page=board.prev_num) \
         if board.prev_num is not None else "javascript:alert('page not found')"
 
-    next_page = url_for("board.show_all", page=board.next_num) \
+    next_page = url_for(".show_all", page=board.next_num) \
         if board.next_num is not None else "javascript:alert('page not found')"
 
     return render_template(
