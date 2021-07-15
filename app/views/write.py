@@ -22,29 +22,31 @@ bp = Blueprint(
 def write():
     if request.method == "POST":
         uuid = request.form.get("uuid", None)
-        if uuid is None:
-            return redirect(url_for(".write"))
+        if uuid is not None:
+            captcha = request.form.get("captcha", None)
+            captcha_from_redis = redis.get(f"{get_ip_hash()}:{uuid}").decode()
+            redis.delete(f"{get_ip_hash()}:{uuid}")
 
-        captcha = request.form.get("captcha", None)
-        captcha_from_redis = redis.get(f"{get_ip_hash()}:{uuid}").decode()
-        redis.delete(f"{get_ip_hash()}:{uuid}")
+            if captcha == captcha_from_redis:
+                board = Board()
+                board.title = request.form.get("title", None)
+                board.content = request.form.get("content", None)
 
-        if captcha == captcha_from_redis:
-            board = Board()
-            board.title = request.form.get("title", None)
-            board.content = request.form.get("content", None)
+                if board.title is not None and board.content is not None:
+                    board.title = board.title.strip()[:32]
+                    board.content = board.content.strip()[:60000]
 
-            if board.title is not None and board.content is not None:
-                board.title = board.title[:32]
-                board.content = board.content.strip()[:60000]
+                    if len(board.content) != 0:
+                        board.good, board.bad = 0, 0
 
-                if len(board.content) != 0:
-                    board.good, board.bad = 0, 0
+                        table_key = request.args.get("table_key", "")
+                        if len(table_key) == 36:
+                            board.table_name = redis.get(f"{get_ip_hash()}:{table_key}").decode()
 
-                    db.session.add(board)
-                    db.session.commit()
+                        db.session.add(board)
+                        db.session.commit()
 
-                    return redirect(url_for("detail.show", idx=board.idx))
+                        return redirect(url_for("detail.show", idx=board.idx))
 
     uuid = uuid4().__str__()
 
