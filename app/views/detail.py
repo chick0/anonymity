@@ -3,6 +3,7 @@ from urllib.parse import urlparse
 
 from flask import Blueprint
 from flask import request
+from flask import url_for
 from flask import render_template
 
 from app.models import Board
@@ -28,14 +29,16 @@ def show(idx: int):
 
     parse = urlparse(url=request.referrer)
     if parse.path.startswith("/table"):
-        from_table = True
+        url = url_for('table.show_table', name=board.table_name)
+    elif parse.path.startswith("/admin"):
+        url = url_for('admin.show_all')
     else:
-        from_table = False
+        url = url_for('board.show_all')
 
     return render_template(
         "detail/show.html",
         board=board,
         need_axios=True,
         uuid=uuid4().__str__(),
-        from_table=from_table
+        url=url
     )

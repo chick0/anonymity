@@ -2,11 +2,7 @@
 {% block content %}
     <div class="container">
         <div class="py-3">
-        {% if from_table is true %}
-            <a href="{{ url_for('table.show_table', name=board.table_name) }}">← back to list</a>
-        {% else %}
-            <a href="{{ url_for('board.show_all') }}">← back to list</a>
-        {% endif %}
+            <a href="{{ url }}">← back to list</a>
             <h1>{{ board.title }}</h1>
             <div>
                 <button class="btn btn-success" id="boardGood">Good:{{ board.good }}</button>
