@@ -57,14 +57,11 @@ def verify_post():
 
     captcha = request.form.get("captcha", None)
     captcha_from_redis = redis.get(f"{get_ip_hash()}:{uuid}")
-
     if captcha_from_redis is None:
         return redirect(url_for("admin.verify", why="captcha"))
 
-    captcha_from_redis = captcha_from_redis.decode()
     redis.delete(f"{get_ip_hash()}:{uuid}")
-
-    if captcha == captcha_from_redis:
+    if captcha == captcha_from_redis.decode():
         one_time_token = request.form.get("token", "")
         token = Token.query.filter_by(
             token=one_time_token,

@@ -35,14 +35,11 @@ def post():
 
     captcha = request.form.get("captcha", None)
     captcha_from_redis = redis.get(f"{get_ip_hash()}:{uuid}")
-
     if captcha_from_redis is None:
-        return redirect(url_for(".write", why="captcha"))
+        return redirect(url_for("write.write", why="captcha"))
 
-    captcha_from_redis = captcha_from_redis.decode()
     redis.delete(f"{get_ip_hash()}:{uuid}")
-
-    if captcha == captcha_from_redis:
+    if captcha == captcha_from_redis.decode():
         board = Board()
         board.title = request.form.get("title", None)
         board.content = request.form.get("content", None)
@@ -67,6 +64,6 @@ def post():
                     redis.delete(f"{get_ip_hash()}:{table_key}")
 
                 return redirect(url_for("detail.show", idx=board.idx))
-    else:
-        table_key = request.args.get("table_key", "")
-        return redirect(url_for(".write", why="wrong-captcha", table_key=table_key))
+
+    table_key = request.args.get("table_key", "")
+    return redirect(url_for(".write", why="wrong-captcha", table_key=table_key))

@@ -40,9 +40,15 @@ def add():
         }), 400
 
     captcha = request.form.get("captcha", None)
-    captcha_from_redis = redis.get(f"{get_ip_hash()}:{uuid}").decode()
+    captcha_from_redis = redis.get(f"{get_ip_hash()}:{uuid}")
+    if captcha_from_redis is None:
+        return jsonify({
+            "message": "captcha code is incorrect",
+            "result": "failed"
+        }), 400
+
     redis.delete(f"{get_ip_hash()}:{uuid}")
-    if captcha != captcha_from_redis:
+    if captcha != captcha_from_redis.decode():
         return jsonify({
             "message": "captcha code is incorrect",
             "result": "failed"
