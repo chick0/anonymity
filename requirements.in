@@ -7,6 +7,9 @@ flask_sqlalchemy
 # for captcha
 captcha
 
+# for mysql
+mysqlclient
+
 # for run launch.py
 waitress
 
