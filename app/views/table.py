@@ -19,7 +19,7 @@ bp = Blueprint(
 )
 
 
-@bp.route("")
+@bp.get("")
 def show_all_table():
     tables = Table.query.all()
     return render_template(
@@ -28,7 +28,7 @@ def show_all_table():
     )
 
 
-@bp.route("/<string:name>")
+@bp.get("/<string:name>")
 def show_table(name: str):
     table = Table.query.filter_by(
         name=name
@@ -57,7 +57,7 @@ def show_table(name: str):
     )
 
 
-@bp.route("/<string:name>/write")
+@bp.get("/<string:name>/write")
 def write(name: str):
     table = Table.query.filter_by(
         name=name

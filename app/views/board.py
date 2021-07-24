@@ -14,7 +14,7 @@ bp = Blueprint(
 )
 
 
-@bp.route("")
+@bp.get("")
 def show_all():
     board = Board.query.order_by(
         Board.idx.desc()

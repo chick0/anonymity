@@ -20,7 +20,7 @@ bp = Blueprint(
 )
 
 
-@bp.route("/", methods=['POST'])
+@bp.post("/")
 def add():
     board_idx = request.args.get("board_idx", -1, type=int)
     board = Board.query.filter_by(
@@ -65,7 +65,7 @@ def add():
     })
 
 
-@bp.route("/<int:idx>")
+@bp.get("/<int:idx>")
 def get(idx: int):
     reply_list = Reply.query.filter_by(
         board_idx=idx
@@ -89,7 +89,7 @@ def get(idx: int):
     })
 
 
-@bp.route("/show/<int:idx>")
+@bp.get("/show/<int:idx>")
 def show(idx: int):
     reply = Reply.query.filter_by(
         idx=idx

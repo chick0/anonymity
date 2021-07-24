@@ -18,7 +18,7 @@ bp = Blueprint(
 )
 
 
-@bp.route("")
+@bp.get("")
 def run():
     # 1) check the ip salt
     salt = Salt.query.first()

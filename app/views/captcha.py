@@ -16,7 +16,7 @@ bp = Blueprint(
 )
 
 
-@bp.route("/<string:uuid>")
+@bp.get("/<string:uuid>")
 def generate(uuid: str):
     image = ImageCaptcha()
     token = token_hex(3)

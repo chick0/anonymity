@@ -12,7 +12,7 @@ bp = Blueprint(
 )
 
 
-@bp.route("")
+@bp.get("")
 def form():
     query = request.args.get("title", "", type=str)
     if len(query) != 0:

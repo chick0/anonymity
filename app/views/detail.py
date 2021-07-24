@@ -16,7 +16,7 @@ bp = Blueprint(
 )
 
 
-@bp.route("/<int:idx>")
+@bp.get("/<int:idx>")
 def show(idx: int):
     board = Board.query.filter_by(
         idx=idx

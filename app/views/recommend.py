@@ -2,6 +2,7 @@
 from flask import Blueprint
 from flask import request
 from flask import jsonify
+from flask import Response
 
 from app import db
 from app.models import Board
@@ -15,50 +16,66 @@ bp = Blueprint(
 )
 
 
-@bp.route("/ip")
+@bp.get("/ip")
 def ip():
-    return get_ip_hash()
+    return Response(
+        mimetype="text/plain",
+        response=f"Your IP Hash is {get_ip_hash()}"
+    )
 
 
-@bp.route("/board", methods=['GET', 'POST'])
+@bp.get("/board")
 def board():
-    idx = request.args.get("idx", default=-1, type=int)
-
-    if request.method == "GET":
-        board_ = Board.query.filter_by(
-            idx=idx
-        ).first()
+    board_obj = Board.query.filter_by(
+        idx=request.args.get("idx", default=-1, type=int)
+    ).first()
+    if board_obj is None:
         return jsonify({
-            "idx": idx,
-            "good": board_.good,
-            "bad": board_.bad,
+            "error": "fail to find a target"
         })
-    elif request.method == "POST":
-        vote = Recommend.query.filter_by(
-            target_idx=idx,
-            is_board=True,
-            ip=get_ip_hash()
-        ).first()
 
-        if vote is None:
-            vote = Recommend()
-            vote.target_idx = idx
-            vote.is_board = True
-            vote.vote = True if request.form.get("vote", type=str) == 'good' else False
-            vote.used = False
-            vote.ip = get_ip_hash()
+    return jsonify({
+        "idx": board_obj.idx,
+        "good": board_obj.good,
+        "bad": board_obj.bad,
+    })
 
-            db.session.add(vote)
-            db.session.commit()
-        else:
-            return jsonify({
-                "result": "canceled",
-                "message": "already voted"
-            }), 400
 
+@bp.post("/board")
+def board_post():
+    board_obj = Board.query.filter_by(
+        idx=request.args.get("idx", default=-1, type=int)
+    ).first()
+    if board_obj is None:
         return jsonify({
-            "idx": idx,
-            "vote": vote.vote,
-            "result": "ok",
-            "date": vote.date.__str__()
+            "error": "fail to find a target"
         })
+
+    vote = Recommend.query.filter_by(
+        target_idx=board_obj.idx,
+        is_board=True,
+        ip=get_ip_hash()
+    ).first()
+
+    if vote is None:
+        vote = Recommend()
+        vote.target_idx = board_obj.idx
+        vote.is_board = True
+        vote.vote = True if request.form.get("vote", type=str) == 'good' else False
+        vote.used = False
+        vote.ip = get_ip_hash()
+
+        db.session.add(vote)
+        db.session.commit()
+    else:
+        return jsonify({
+            "result": "canceled",
+            "message": "already voted"
+        }), 400
+
+    return jsonify({
+        "idx": board_obj.idx,
+        "vote": vote.vote,
+        "result": "ok",
+        "date": vote.date.__str__()
+    })
