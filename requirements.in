@@ -1,0 +1,11 @@
+# for flask app
+flask
+flask_redis
+flask_migrate
+flask_sqlalchemy
+
+# for run launch.py
+waitress
+
+# for run pip-compile
+# pip-tools
