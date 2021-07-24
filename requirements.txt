@@ -6,6 +6,8 @@
 #
 alembic==1.6.5
     # via flask-migrate
+captcha==0.3
+    # via -r requirements.in
 click==8.0.1
     # via flask
 flask==2.0.1
@@ -34,6 +36,8 @@ markupsafe==2.0.1
     # via
     #   jinja2
     #   mako
+pillow==8.3.1
+    # via captcha
 python-dateutil==2.8.2
     # via alembic
 python-editor==1.0.4

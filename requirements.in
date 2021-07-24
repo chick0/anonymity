@@ -4,6 +4,9 @@ flask_redis
 flask_migrate
 flask_sqlalchemy
 
+# for captcha
+captcha
+
 # for run launch.py
 waitress
 
