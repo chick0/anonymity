@@ -10,6 +10,9 @@
             {% if board|check_table_name is true %}
                 <a class="btn btn-secondary" href="{{ url_for('table.show_table', name=board.table_name) }}">Table:{{ board.table_name }}</a>
             {% endif %}
+            {% if board.is_notice is true %}
+                <a class="btn btn-secondary" href="{{ url_for('admin.show_all') }}">Table:Admin</a>
+            {% endif %}
             </div>
         </div>
 
