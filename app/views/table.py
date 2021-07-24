@@ -51,7 +51,9 @@ def show_table(name: str):
         "board/show_all.html",
         board_list=board,
         prev=prev_page,
-        next=next_page
+        next=next_page,
+
+        write_url=url_for("table.write", name=table.name)
     )
 
 
