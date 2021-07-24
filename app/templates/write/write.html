@@ -6,6 +6,12 @@
         </div>
 
         <div class="py-3">
+        {% if no_captcha is true %}
+            <div class="py-3">
+                <h3 class="mb-0">Warning!</h3>
+                <p class="lead">If you leave this page, you need to verify again with a one-time token.</p>
+            </div>
+        {% endif %}
             <form method="POST">
                 <div class="mb-3 row">
                     <label for="title" class="col-sm-2 col-form-label">title</label>
