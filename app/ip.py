@@ -32,8 +32,8 @@ def get_salt() -> str:
 def get_ip_hash() -> str:
     def get_ip() -> str:
         header_list = [
+            "CF-Connecting-IP",
             "X-Forwarded-For",
-            "CF-Connecting-IP"
         ]
         for header in header_list:
             tmp = request.headers.get(header, "")
