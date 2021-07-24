@@ -6,6 +6,10 @@
             <h1>Tables</h1>
         </div>
 
+        <div class="py-2" id="admin_table">
+            <h3><a href="{{ url_for('admin.show_all') }}">Admin</a></h3>
+            <p class="lead">Notice for users</p>
+        </div>
     {% for table in tables %}
         <div class="py-2" id="table__{{ table.name }}">
             <h3><a href="{{ url_for('table.show_table', name=table.name) }}">{{ table.name }}</a></h3>
