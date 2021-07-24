@@ -23,7 +23,7 @@ bp = Blueprint(
 )
 
 
-def verify_access_token(access_token: str) -> bool:
+def verify_access_token(access_token: str) -> [str, bool]:
     token = Token.query.filter_by(
         token=access_token,
         is_onetime=False
@@ -32,12 +32,12 @@ def verify_access_token(access_token: str) -> bool:
         if token.expire >= datetime.now():
             from_redis = redis.get(f"access:{access_token}")
             if from_redis is not None and get_ip_hash() == from_redis.decode():
-                return True
+                return [token.token, True]
 
         db.session.delete(token)
         db.session.commit()
 
-    return False
+    return [None, False]
 
 
 @bp.get("/verify")
@@ -81,14 +81,15 @@ def verify_post():
             db.session.add(token)
             db.session.commit()
 
-            return redirect(url_for(".write", token=token.token))
+            return redirect(url_for("admin.write", token=token.token))
 
     return redirect(url_for("admin.verify"))
 
 
 @bp.get("/write")
 def write():
-    if not verify_access_token(request.args.get("token", "")):
+    token, result = verify_access_token(request.args.get("token", ""))
+    if not result:
         return redirect(url_for(".verify"))
 
     return render_template(
@@ -99,7 +100,8 @@ def write():
 
 @bp.post("/write")
 def write_post():
-    if not verify_access_token(request.args.get("token", "")):
+    token, result = verify_access_token(request.args.get("token", ""))
+    if not result:
         return redirect(url_for(".verify"))
 
     board = Board()
@@ -114,7 +116,7 @@ def write_post():
         db.session.add(board)
         db.session.commit()
 
-    return redirect(url_for("admin.write"))
+    return redirect(url_for("admin.write", token=token))
 
 
 @bp.get("")
