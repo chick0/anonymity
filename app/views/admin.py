@@ -25,15 +25,17 @@ bp = Blueprint(
 
 def verify_access_token(access_token: str) -> bool:
     token = Token.query.filter_by(
-        token=access_token
+        token=access_token,
+        is_onetime=False
     ).first()
     if token is not None:
         if token.expire >= datetime.now():
-            if get_ip_hash() == redis.get(f"access:{access_token}").decode():
+            from_redis = redis.get(f"access:{access_token}")
+            if from_redis is not None and get_ip_hash() == from_redis.decode():
                 return True
-        else:
-            db.session.delete(token)
-            db.session.commit()
+
+        db.session.delete(token)
+        db.session.commit()
 
     return False
 
