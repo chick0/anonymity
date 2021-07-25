@@ -30,6 +30,9 @@ def show_all_table():
 
 @bp.get("/<string:name>")
 def show_table(name: str):
+    if name == "admin":
+        return redirect(url_for("admin.show_all"))
+
     table = Table.query.filter_by(
         name=name
     ).first()
@@ -59,6 +62,9 @@ def show_table(name: str):
 
 @bp.get("/<string:name>/write")
 def write(name: str):
+    if name == "admin":
+        return redirect(url_for("admin.write"))
+
     table = Table.query.filter_by(
         name=name
     ).first()
