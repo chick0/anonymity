@@ -1,3 +1,4 @@
+from threading import Thread
 
 from flask import Flask
 from flask_redis import FlaskRedis
@@ -35,5 +36,9 @@ def create_app():
 
     # init flask redis client!
     redis.init_app(app)
+
+    # background task
+    from . import task
+    Thread(target=task.loop, args=(app,), daemon=True).start()
 
     return app
