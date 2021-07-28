@@ -12,6 +12,3 @@ mysqlclient
 
 # for run launch.py
 waitress
-
-# for run pip-compile
-# pip-tools
