@@ -40,7 +40,6 @@ options:
 ```yaml
 options:
    --set-port PORT : set the port number to run the waitress server
-   --no-cron-job   : disable cron job working with multiprocessing 
 ```
 
 ### table.py
