@@ -12,17 +12,16 @@ from app import create_app
 
 
 def task(port: int):
-    try:
-        print(f"- try to call cron at [{datetime.now().__str__().split('.')[0]}] ... ", end="")
-        urlopen(f"http://localhost:{port}/cron", timeout=2)
+    while True:
+        try:
+            print(f"- try to call cron at [{datetime.now().__str__().split('.')[0]}] ... ", end="")
+            urlopen(f"http://localhost:{port}/cron", timeout=2)
 
-        print("SUCCESS")
-        sleep(5 * 60), task(port)
-    except KeyboardInterrupt:
-        pass
-    except (URLError, HTTPError):
-        print("FAILED. try again in 3 seconds...")
-        sleep(3), task(port)
+            print("SUCCESS")
+            sleep(5 * 60)
+        except (URLError, HTTPError):
+            print("FAILED. try again in 3 seconds...")
+            sleep(3)
 
 
 if __name__ == "__main__":
