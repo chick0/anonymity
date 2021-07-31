@@ -34,6 +34,6 @@ def create_app():
 
     # background task
     from . import task
-    Thread(target=task.loop, args=(app,), daemon=True).start()
+    Thread(target=task.core, args=(app,), daemon=True).start()
 
     return app
