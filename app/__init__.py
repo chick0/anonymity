@@ -9,8 +9,6 @@ redis = FlaskRedis()
 db = SQLAlchemy()
 migrate = Migrate()
 
-APP_NAME = "Anonymity"
-
 
 def create_app():
     app = Flask(__name__)
@@ -29,13 +27,10 @@ def create_app():
     for name in template_filter.filter_list:
         app.add_template_filter(f=getattr(template_filter, name), name=name)
 
-    # database init
-    from . import models
+    # client init
+    redis.init_app(app)
     db.init_app(app=app)
     migrate.init_app(app=app, db=db)
-
-    # init flask redis client!
-    redis.init_app(app)
 
     # background task
     from . import task
