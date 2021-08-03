@@ -13,5 +13,5 @@ if __name__ == "__main__":
 
     args = parser.parse_args()
 
-    print(f"Starting 'Anonymity' with port number {args.set_port}")
+    print(f"Starting 'Anonymity' at http://127.0.0.1:{args.set_port}/")
     serve(app=create_app(), port=args.set_port)
