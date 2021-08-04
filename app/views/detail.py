@@ -5,6 +5,7 @@ from flask import Blueprint
 from flask import request
 from flask import url_for
 from flask import render_template
+from flask_babel import gettext
 
 from app.models import Board
 from app.alert import with_template
@@ -23,7 +24,7 @@ def show(idx: int):
     ).first()
     if board is None:
         return with_template(
-            message="board not Found",
+            message=gettext("board_not_found"),
             url="/"
         ), 404
 

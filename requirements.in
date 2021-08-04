@@ -1,8 +1,9 @@
 # for flask app
-flask
-flask_redis
-flask_migrate
-flask_sqlalchemy
+Flask
+flask-redis
+Flask-Migrate
+Flask-SQLAlchemy
+Flask-Babel
 
 # for captcha
 captcha

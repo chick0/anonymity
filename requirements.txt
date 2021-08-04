@@ -6,6 +6,8 @@
 #
 alembic==1.6.5
     # via flask-migrate
+babel==2.9.1
+    # via flask-babel
 captcha==0.3
     # via -r requirements.in
 click==8.0.1
@@ -13,9 +15,12 @@ click==8.0.1
 flask==2.0.1
     # via
     #   -r requirements.in
+    #   flask-babel
     #   flask-migrate
     #   flask-redis
     #   flask-sqlalchemy
+flask-babel==2.0.0
+    # via -r requirements.in
 flask-migrate==3.0.1
     # via -r requirements.in
 flask-redis==0.4.0
@@ -29,7 +34,9 @@ greenlet==1.1.0
 itsdangerous==2.0.1
     # via flask
 jinja2==3.0.1
-    # via flask
+    # via
+    #   flask
+    #   flask-babel
 mako==1.1.4
     # via alembic
 markupsafe==2.0.1
@@ -44,6 +51,10 @@ python-dateutil==2.8.2
     # via alembic
 python-editor==1.0.4
     # via alembic
+pytz==2021.1
+    # via
+    #   babel
+    #   flask-babel
 redis==3.5.3
     # via flask-redis
 six==1.16.0

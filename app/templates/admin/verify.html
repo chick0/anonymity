@@ -2,13 +2,13 @@
 {% block content %}
     <div class="container">
         <div class="py-3">
-            <h1>Verify</h1>
+            <h1>{{ _("admin_verify") }}</h1>
         </div>
 
         <div class="py-3">
             <form method="POST">
                 <div class="mb-3 row">
-                    <label for="token" class="col-sm-2 col-form-label">one-time token</label>
+                    <label for="token" class="col-sm-2 col-form-label">{{ _("one_time_token") }}</label>
                     <div class="col-sm-10">
                         <input class="form-control" type="text" id="token" name="token" required="required">
                     </div>
@@ -16,11 +16,11 @@
                 <div class="mb-3 row">
                     <div class="input-group col-sm-10 mb-3">
                         <img class="input-group-text" src="{{ url_for('captcha.generate', uuid=uuid) }}">
-                        <input class="form-control" type="text" name="captcha" required="required" placeholder="captcha code">
+                        <input class="form-control" type="text" name="captcha" required="required" placeholder="{{ _("captcha_here") }}">
                     </div>
                     <input type="text" name="uuid" value="{{ uuid }}" hidden="hidden" readonly="readonly">
                 </div>
-                <button class="btn btn-danger" type="submit">Write</button>
+                <button class="btn btn-danger" type="submit">{{ _("admin_verify") }}</button>
             </form>
         </div>
     </div>

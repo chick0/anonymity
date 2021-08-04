@@ -2,17 +2,17 @@
 {% block content %}
     <div class="container">
     {% for board in board_list.items %}
-        <div class="my-3 py-5 {% if board.is_notice %}border border-5 border-danger{% endif %}" id="{{ board.idx }}">
-            <h3><a href="{{ url_for('detail.show', idx=board.idx) }}">{{ board.title }}</a></h3>
-        {% if board.is_notice is false %}
+        <div class="my-3 py-5" id="{{ board.idx }}">
+            <h3><a href="{{ url_for('detail.show', idx=board.idx) }}" class="{% if board.is_notice is true %}text-danger{% endif %}">{{ board.title }}</a></h3>
             <div class="mb-2">
                 <b class="badge bg-success">Good:{{ board.good }}</b>
                 <b class="badge bg-danger">Bad:{{ board.bad }}</b>
-            {% if board|check_table_name is true %}
+            {% if board.is_notice is true %}
+                <b class="badge bg-secondary">Table:{{ _("table_admin") }}</b>
+            {% elif board|check_table_name is true %}
                 <b class="badge bg-secondary">Table:{{ board.table_name }}</b>
             {% endif %}
             </div>
-        {% endif %}
 
             <div style="max-height:180px;overflow-y:scroll;">
             {% for line in board.content.split('\n') %}

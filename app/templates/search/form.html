@@ -2,9 +2,9 @@
 {% block content %}
     <div class="container">
         <div class="py-3">
-            <a href="{{ url_for('board.show_all') }}">← back to list</a>
+            <a href="{{ url_for('board.show_all') }}">← {{ _("back_to_list") }}</a>
 
-            <h1>Search!</h1>
+            <h1>{{ _("search") }}!</h1>
             <form method="get">
                 <input class="form-control" type="text" name="title" placeholder="title" required="required" value="{{ query }}">
             </form>

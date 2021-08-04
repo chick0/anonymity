@@ -2,13 +2,13 @@
 {% block content %}
     <div class="container">
         <div class="py-3">
-            <a href="{{ url_for('board.show_all') }}">← back to list</a>
+            <a href="{{ url_for('board.show_all') }}">← {{ _("back_to_list") }}</a>
             <h1>Tables</h1>
         </div>
 
         <div class="py-2" id="admin_table">
-            <h3><a href="{{ url_for('admin.show_all') }}">Admin</a></h3>
-            <p class="lead">Notice for users</p>
+            <h3><a href="{{ url_for('admin.show_all') }}">{{ _("table_admin") }}</a></h3>
+            <p class="lead">{{ _("table_admin_describe") }}</p>
         </div>
     {% for table in tables %}
         <div class="py-2" id="table__{{ table.name }}">

@@ -17,16 +17,16 @@
                 <div class="collapse navbar-collapse" id="navbar">
                     <ul class="navbar-nav mr-auto">
                         <li class="nav-item">
-                            <a class="nav-link" href="{{ write_url|write_url }}">Write</a>
+                            <a class="nav-link" href="{{ write_url|write_url }}">{{ _("navbar_write") }}</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="{{ url_for('board.show_all') }}">Show All</a>
+                            <a class="nav-link" href="{{ url_for('board.show_all') }}">{{ _("navbar_show_all") }}</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="{{ url_for('table.show_all_table') }}">Tables</a>
+                            <a class="nav-link" href="{{ url_for('table.show_all_table') }}">{{ _("navbar_tables") }}</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="{{ url_for('search.form') }}">Search</a>
+                            <a class="nav-link" href="{{ url_for('search.form') }}">{{ _("navbar_search") }}</a>
                         </li>
                     </ul>
                 </div>

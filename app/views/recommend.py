@@ -3,6 +3,7 @@ from flask import Blueprint
 from flask import request
 from flask import jsonify
 from flask import Response
+from flask_babel import gettext
 
 from app import db
 from app.models import Board
@@ -31,7 +32,7 @@ def board():
     ).first()
     if board_obj is None:
         return jsonify({
-            "error": "fail to find a target"
+            "error": gettext("target_not_found")
         })
 
     return jsonify({
@@ -48,7 +49,7 @@ def board_post():
     ).first()
     if board_obj is None:
         return jsonify({
-            "error": "fail to find a target"
+            "error": gettext("target_not_found")
         })
 
     vote = Recommend.query.filter_by(
@@ -70,7 +71,7 @@ def board_post():
     else:
         return jsonify({
             "result": "canceled",
-            "message": "already voted"
+            "message": gettext("already_vote")
         }), 400
 
     return jsonify({

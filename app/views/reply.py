@@ -5,6 +5,7 @@ from flask import jsonify
 from flask import render_template
 from flask import redirect
 from flask import url_for
+from flask_babel import gettext
 
 from app import db
 from app import redis
@@ -28,14 +29,14 @@ def add():
     ).first()
     if board is None:
         return jsonify({
-            "message": "board not found",
+            "message": gettext("target_not_found"),
             "result": "failed"
         }), 404
 
     uuid = request.form.get("uuid", "", type=str)
     if len(uuid) == 0:
         return jsonify({
-            "message": "captcha uuid is missing",
+            "message": gettext("captcha_missing"),
             "result": "failed"
         }), 400
 
@@ -43,14 +44,14 @@ def add():
     captcha_from_redis = redis.get(f"{get_ip_hash()}:{uuid}")
     if captcha_from_redis is None:
         return jsonify({
-            "message": "captcha code is incorrect",
+            "message": gettext("captcha_incorrect"),
             "result": "failed"
         }), 400
 
     redis.delete(f"{get_ip_hash()}:{uuid}")
     if captcha != captcha_from_redis.decode():
         return jsonify({
-            "message": "captcha code is incorrect",
+            "message": gettext("captcha_incorrect"),
             "result": "failed"
         }), 400
 

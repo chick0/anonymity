@@ -1,0 +1,120 @@
+# Korean translations for PROJECT.
+# Copyright (C) 2021 ORGANIZATION
+# This file is distributed under the same license as the PROJECT project.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2021.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PROJECT VERSION\n"
+"Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
+"POT-Creation-Date: 2021-08-04 23:56+0900\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language: ko\n"
+"Language-Team: ko <LL@li.org>\n"
+"Plural-Forms: nplurals=1; plural=0\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.9.1\n"
+
+#: app/templates/layout.html:20
+msgid "navbar_write"
+msgstr "글 쓰기"
+
+#: app/templates/layout.html:23
+msgid "navbar_show_all"
+msgstr "모든 글 보기"
+
+#: app/templates/layout.html:26
+msgid "navbar_tables"
+msgstr "테이블"
+
+#: app/templates/layout.html:29
+msgid "navbar_search"
+msgstr "검색하기"
+
+#: app/templates/admin/verify.html:5 app/templates/admin/verify.html:23
+msgid "admin_verify"
+msgstr "관리자 인증"
+
+#: app/templates/admin/verify.html:11
+msgid "one_time_token"
+msgstr "1회용 토큰"
+
+#: app/templates/admin/verify.html:19 app/templates/detail/show.html:28
+#: app/templates/write/write.html:32
+msgid "captcha_here"
+msgstr "보안 코드를 입력해주세요."
+
+#: app/templates/board/show_all.html:11
+#: app/templates/table/show_all_table.html:10
+msgid "table_admin"
+msgstr "관리자"
+
+#: app/templates/detail/show.html:5 app/templates/search/form.html:5
+#: app/templates/table/show_all_table.html:5 app/templates/write/write.html:5
+msgid "back_to_list"
+msgstr "목록으로 돌아가기"
+
+#: app/templates/detail/show.html:32
+msgid "submit"
+msgstr "작성하기"
+
+#: app/templates/reply/show.html:5
+msgid "back_to_board"
+msgstr "게시글로 돌아가기"
+
+#: app/templates/search/form.html:7
+msgid "search"
+msgstr "검색하기"
+
+#: app/templates/table/show_all_table.html:11
+msgid "table_admin_describe"
+msgstr "공지를 위한 테이블 입니다."
+
+#: app/templates/write/write.html:11
+msgid "warning"
+msgstr "주의"
+
+#: app/templates/write/write.html:12
+msgid "admin_re_verify_alert"
+msgstr "이 페이지를 나가면 1회용 토큰을 통해 다시 인증받아야 합니다."
+
+#: app/templates/write/write.html:17
+msgid "title"
+msgstr "글 제목"
+
+#: app/templates/write/write.html:23
+msgid "content"
+msgstr "글 내용"
+
+#: app/templates/write/write.html:37
+msgid "write"
+msgstr "작성하기"
+
+#: app/views/admin.py:132 app/views/board.py:25 app/views/table.py:48
+msgid "page_not_found"
+msgstr "해당 페이지를 찾지 못했습니다!"
+
+#: app/views/detail.py:27
+msgid "board_not_found"
+msgstr "해당 게시글을 찾지 못했습니다!"
+
+#: app/views/recommend.py:35 app/views/recommend.py:52 app/views/reply.py:32
+msgid "target_not_found"
+msgstr "대상을 찾지 못했습니다!"
+
+#: app/views/recommend.py:74
+msgid "already_vote"
+msgstr "이 IP 주소는 이미 이 게시글에 투표했습니다. 24시간뒤에 이 게시글에 다시 투표 할 수 있습니다!"
+
+#: app/views/reply.py:39
+msgid "captcha_missing"
+msgstr "오류! 보안 코드를 전달 받지 못했습니다."
+
+#: app/views/reply.py:47 app/views/reply.py:54
+msgid "captcha_incorrect"
+msgstr "오류! 보안 코드가 올바르지 않습니다."
+

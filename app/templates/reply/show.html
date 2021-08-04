@@ -2,7 +2,7 @@
 {% block content %}
     <div class="container">
         <div class="py-3">
-            <a href="{{ url_for('detail.show', idx=reply.board_idx) }}">← back to board</a>
+            <a href="{{ url_for('detail.show', idx=reply.board_idx) }}">← {{ _("back_to_board") }}</a>
 
             <p>{{ reply.content }}</p>
         </div>
