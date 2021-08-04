@@ -54,7 +54,7 @@ if __name__ == "__main__":
     redis = Redis.from_url(REDIS_URL)
     engine = create_engine(SQLALCHEMY_DATABASE_URI)
 
-    parser = ArgumentParser(description="'Anonymity' Admin token manager")
+    parser = ArgumentParser(description="Admin token manager")
     parser.add_argument("--show",
                         help="show all admin sessions",
                         action="store_const", const=True)
@@ -68,8 +68,10 @@ if __name__ == "__main__":
     args = parser.parse_args()
     if args.show:
         show_logins()
-    if args.create:
+    elif args.create:
         one_time_token = create_one_time_token()
         print(f"One-time token is '{one_time_token}'")
-    if args.logout:
+    elif args.logout:
         delete_all_session()
+    else:
+        parser.print_help()

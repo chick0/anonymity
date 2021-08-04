@@ -6,7 +6,7 @@ from app import create_app
 
 
 if __name__ == "__main__":
-    parser = ArgumentParser(description="Anonymity Launcher")
+    parser = ArgumentParser(description="Server Launcher")
     parser.add_argument("--set-port", metavar="PORT",
                         help="set the port number to run the waitress server",
                         action="store", type=int, default=8082)

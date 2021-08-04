@@ -90,7 +90,7 @@ def del_table():
 if __name__ == "__main__":
     engine = create_engine(SQLALCHEMY_DATABASE_URI)
 
-    parser = ArgumentParser(description="'Anonymity' Table manager")
+    parser = ArgumentParser(description="Table manager")
     parser.add_argument("--show",
                         help="show all tables",
                         action="store_const", const=True)
@@ -107,7 +107,7 @@ if __name__ == "__main__":
     args = parser.parse_args()
     if args.show:
         show_tables()
-    if args.add:
+    elif args.add:
         tables_name = [table.name for table in show_tables()]
         tmp = input("New table name: ").strip()[:32]
         if tmp in tables_name:
@@ -120,7 +120,9 @@ if __name__ == "__main__":
                 )
             else:
                 print("Table name is too short. Cancelled.")
-    if args.edit:
+    elif args.edit:
         edit_table()
-    if args.delete:
+    elif args.delete:
         del_table()
+    else:
+        parser.print_help()
