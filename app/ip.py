@@ -24,6 +24,7 @@ def get_salt() -> str:
         salt = gen_salt()
 
     if datetime.now() >= salt.created + timedelta(days=1):
+        db.session.delete(salt)
         salt = gen_salt()
 
     return salt.string
