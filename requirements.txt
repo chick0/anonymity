@@ -63,7 +63,7 @@ sqlalchemy==1.4.22
     # via
     #   alembic
     #   flask-sqlalchemy
-waitress==2.0.0
+waitress==2.1.1
     # via -r requirements.in
 werkzeug==2.0.1
     # via flask
